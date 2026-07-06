@@ -1,0 +1,16 @@
+const char msg[] = "Hello from C inline assembly!\n";
+
+void _start(void) {
+    __asm__ __volatile__(
+        "syscall"
+        :
+        : "a" (1), "D" (1), "S" (msg), "d" (sizeof(msg) - 1)
+        : "rcx", "r11", "memory"
+    );
+    __asm__ __volatile__(
+        "syscall"
+        :
+        : "a" (60), "D" (0)
+        : "rcx", "r11", "memory"
+    );
+}
