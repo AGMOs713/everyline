@@ -1,5 +1,9 @@
 .PHONY: all run clean
 
+CC ?= cc
+CFLAGS = -nostdlib -static
+LDFLAGS = -Wl,-s,-N,--no-warn-rwx-segments
+
 all: everyline oneline normal
 
 run: all
@@ -8,13 +12,13 @@ run: all
 	./normal
 
 everyline: everyline.c
-	gcc -o everyline everyline.c -nostdlib -static
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 oneline: oneline.c
-	gcc -o oneline oneline.c -nostdlib -static
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 normal: normal.c
-	gcc -o normal normal.c -nostdlib -static
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 clean:
 	rm -f everyline oneline normal
